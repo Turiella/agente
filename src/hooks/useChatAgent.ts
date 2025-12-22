@@ -53,8 +53,9 @@ export const useChatAgent = (config: ChatAgentConfig = {}) => {
           temperature: defaultConfig.temperature,
         },
         {
-          headers: {
-            'Authorization': `Bearer ${defaultConfig.openRouterApiKey}`,
+         headers: {
+           'Authorization': `Bearer ${defaultConfig.openRouterApiKey}`,
+            'Content-Type': 'application/json',
             'HTTP-Referer': window.location.origin,
             'X-Title': 'Customer Support Bot'
           }

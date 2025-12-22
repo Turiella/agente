@@ -6,15 +6,16 @@ import { useAuth } from './hooks/useAuth';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
+import AuthCallback from './pages/AuthCallback';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function AppContent() {
-  const { user, loading, signIn, signUp } = useAuth();
+  const { user, loading, signUp } = useAuth();
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+      <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75 z-50">
+        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-indigo-500"></div>
       </div>
     );
   }
@@ -26,8 +27,11 @@ function AppContent() {
         <Routes>
           <Route 
             path="/login" 
-            element={user ? <Navigate to="/" replace /> : <Login onLogin={signIn} />} 
+            element={user ? <Navigate to="/" replace /> : <Login />} 
           />
+          <Route 
+            path="/auth/callback" element={<AuthCallback />} />
+
           <Route 
             path="/signup" 
             element={user ? <Navigate to="/" replace /> : <Signup onSignup={signUp} />} 
@@ -41,6 +45,7 @@ function AppContent() {
             }
           />
           <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
         </Routes>
       </div>
     </Router>
