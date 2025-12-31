@@ -56,9 +56,10 @@ export const useChatAgent = (config: ChatAgentConfig = {}) => {
          headers: {
            'Authorization': `Bearer ${defaultConfig.openRouterApiKey}`,
             'Content-Type': 'application/json',
-            'HTTP-Referer': window.location.origin,
-            'X-Title': 'Customer Support Bot'
-          }
+            'HTTP-Referer': 'https://subthoracic-zahra-brachydactylous.ngrok-free.dev',
+            'X-Title': 'Customer Support Bot',
+          'Accept': 'application/json'
+         }
         }
       );
       return response.data.choices[0]?.message?.content || 'No pude generar una respuesta.';
@@ -117,7 +118,6 @@ export const useChatAgent = (config: ChatAgentConfig = {}) => {
     return messages;
   };
 
-  // Enviar mensaje
   const sendMessage = async (content: string, userId?: string): Promise<Message> => {
     if (!content.trim()) {
       throw new Error('El mensaje no puede estar vacío');

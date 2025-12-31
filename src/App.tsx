@@ -9,7 +9,7 @@ import Dashboard from './pages/Dashboard';
 import AuthCallback from './pages/AuthCallback';
 import ProtectedRoute from './components/ProtectedRoute';
 
-function AppContent() {
+function App() {
   const { user, loading, signUp } = useAuth();
 
   if (loading) {
@@ -21,41 +21,32 @@ function AppContent() {
   }
 
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-100">
-        <Toaster position="top-right" />
-        <Routes>
-          <Route 
-            path="/login" 
-            element={user ? <Navigate to="/" replace /> : <Login />} 
-          />
-          <Route 
-            path="/auth/callback" element={<AuthCallback />} />
-
-          <Route 
-            path="/signup" 
-            element={user ? <Navigate to="/" replace /> : <Signup onSignup={signUp} />} 
-          />
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute isAuthenticated={!!user}>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<Navigate to="/" replace />} />
-          <Route path="/auth/callback" element={<AuthCallback />} />
-        </Routes>
-      </div>
-    </Router>
-  );
-}
-
-function App() {
-  return (
     <AuthProvider>
-      <AppContent />
+      <Router>
+        <Toaster position="top-right" />
+        <div className="min-h-screen bg-gray-100">
+          <Routes>
+            <Route 
+              path="/login" 
+              element={user ? <Navigate to="/" replace /> : <Login />} 
+            />
+            <Route 
+              path="/signup" 
+              element={user ? <Navigate to="/" replace /> : <Signup onSignup={signUp}/>} 
+            />
+            <Route 
+              path="/" 
+              element={
+                <ProtectedRoute isAuthenticated={!!user}>
+                  <Dashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route path="/auth/callback" element={<AuthCallback />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </div>
+      </Router>
     </AuthProvider>
   );
 }
